@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from auth import get_current_user
-from schemas import ProductCreate, ProductResponse
-from models import Product, User
+from application.backend.database import get_db
+from application.backend.auth import get_current_user
+from application.backend.schemas import ProductCreate, ProductResponse
+from application.backend.models import Product, User
 from typing import List
 
 router = APIRouter()
+
 
 @router.post("/products", response_model=ProductResponse)
 def create_product(
@@ -22,9 +23,13 @@ def create_product(
     db.refresh(new_product)
     return new_product
 
+
 @router.get("/products", response_model=List[ProductResponse])
-def list_products(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def list_products(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     return db.query(Product).all()
+
 
 @router.delete("/product/{product_id}", response_model=ProductResponse)
 def delete_product(

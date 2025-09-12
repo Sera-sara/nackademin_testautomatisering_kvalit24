@@ -1,11 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from database import get_db
-from schemas import UserCreate, UserResponse, Token
-from models import User
-from auth import get_password_hash, authenticate_user, create_access_token
+from application.backend.database import get_db
+from application.backend.schemas import UserCreate, UserResponse, Token
+from application.backend.models import User
+from application.backend.auth import (
+    get_password_hash,
+    authenticate_user,
+    create_access_token,
+)
 
 router = APIRouter()
+
 
 @router.post("/signup", response_model=UserResponse)
 def signup(user: UserCreate, db: Session = Depends(get_db)):
@@ -19,6 +24,7 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
+
 @router.post("/login", response_model=Token)
 def login(form_data: UserCreate, db: Session = Depends(get_db)):
     user = authenticate_user(db, form_data.username, form_data.password)
@@ -28,7 +34,5 @@ def login(form_data: UserCreate, db: Session = Depends(get_db)):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = create_access_token(
-        data={"sub": user.username}
-    )
+    access_token = create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}

@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import Base, engine
-from routes import auth, users, products
+from application.backend.database import Base, engine
+from application.backend.routes import auth, users, products
+from application.backend.init_db import init_db
 
 app = FastAPI()
 
@@ -18,10 +19,12 @@ app.add_middleware(
 )
 
 Base.metadata.create_all(bind=engine)
+init_db()
 
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(products.router)
+
 
 # Healthcheck
 @app.get("/health")

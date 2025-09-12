@@ -36,5 +36,5 @@ def test_login():  # use -s in the pytest command to show the print.
         assert len(user_products) == 0
         print("Users product list is empty.")
     else:
-        assert len(user_products) >= 0
+        assert len(user_products) >= 1
         print("Products exist on the users account.")
