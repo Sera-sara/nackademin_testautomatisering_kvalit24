@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".env"))
 load_dotenv(dotenv_path=env_path)
 
-
+@pytest.mark.order(5)
 def test_setup_user():
     user_api = UserAPI(os.getenv("BASE_URL"))
     admin_api = AdminAPI(os.getenv("BASE_URL"))
@@ -37,7 +37,7 @@ def test_setup_user():
     user_api.add_product_to_user(token, course02)
     user_api.add_product_to_user(token, course03)
 
-
+@pytest.mark.order(6)
 def test_signup(page: Page):
     home_page = HomePage(page)
     user_page = UserPage(page)
@@ -54,7 +54,7 @@ def test_signup(page: Page):
     home_page.login(username, password)
     user_page.logout_user()
 
-
+@pytest.mark.order(7)
 def test_login(page: Page):
     home_page = HomePage(page)
     user_page = UserPage(page)
@@ -71,7 +71,7 @@ def test_login(page: Page):
     expect(user_page.page.get_by_text(course02)).to_be_visible()
     user_page.logout_user()
 
-
+@pytest.mark.order(8)
 def test_reset_data_user():
     user_api = UserAPI(os.getenv("BASE_URL"))
     admin_api = AdminAPI(os.getenv("BASE_URL"))
