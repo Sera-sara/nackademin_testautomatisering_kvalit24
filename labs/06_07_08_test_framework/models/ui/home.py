@@ -1,5 +1,7 @@
 # Landing page where the users could either login or
 # navigate to signup
+import os
+from dotenv import load_dotenv
 
 
 class HomePage:
