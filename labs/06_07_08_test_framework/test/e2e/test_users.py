@@ -5,6 +5,7 @@ from models.ui.user import UserPage
 from models.api.user import UserAPI
 from models.api.admin import AdminAPI
 import libs.utils
+import pytest
 
 # complete imports
 import sys
