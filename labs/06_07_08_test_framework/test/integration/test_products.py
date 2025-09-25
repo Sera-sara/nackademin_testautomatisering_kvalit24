@@ -3,7 +3,8 @@ import libs.utils
 import pytest
 from models.api.user import UserAPI
 from models.api.admin import AdminAPI
-# from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 
 
 def test_add_product_to_catalog():  # complete code
