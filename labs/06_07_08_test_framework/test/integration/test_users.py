@@ -1,7 +1,8 @@
 from playwright.sync_api import Page
 import libs.utils
 from models.api.user import UserAPI
-
+import os
+from dotenv import load_dotenv
 
 def test_signup():
     user_api = UserAPI("http://localhost:8000")
