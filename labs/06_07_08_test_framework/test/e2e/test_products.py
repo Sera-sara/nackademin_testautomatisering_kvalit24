@@ -12,7 +12,7 @@ env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "
 load_dotenv(dotenv_path=env_path)
 # complete imports
 
-
+@pytest.mark.order(1)
 def test_setup_admin():
     user_api = UserAPI(os.getenv("BASE_URL"))
     admin_api = AdminAPI(os.getenv("BASE_URL"))
@@ -29,7 +29,7 @@ def test_setup_admin():
     admin_api.create_product(course03)
     admin_api.create_product(course04)
 
-
+@pytest.mark.order(2)
 def test_add_product_to_catalog(page: Page):
     user_api = UserAPI(os.getenv("BASE_URL"))
     product = "Java-programmering för nybörjare"
@@ -48,7 +48,7 @@ def test_add_product_to_catalog(page: Page):
     expect(admin_page.product_item.filter(has_text=product)).to_be_visible()
     admin_page.logout_admin()
 
-
+@pytest.mark.order(3)
 def test_remove_product_from_catalog(page: Page):
     user_api = UserAPI(os.getenv("BASE_URL"))
     product_name = os.getenv("product04")
@@ -67,7 +67,7 @@ def test_remove_product_from_catalog(page: Page):
     expect(admin_page.product_item.filter(has_text=product_name)).not_to_be_visible()
     admin_page.logout_admin()
 
-
+@pytest.mark.order(4)
 def test_reset_data_admin():
     user_api = UserAPI(os.getenv("BASE_URL"))
     admin_api = AdminAPI(os.getenv("BASE_URL"))
