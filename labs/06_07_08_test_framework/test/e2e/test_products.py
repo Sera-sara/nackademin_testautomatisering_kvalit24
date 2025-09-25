@@ -4,6 +4,7 @@ from models.ui.admin import AdminPage
 from models.api.user import UserAPI
 from models.api.admin import AdminAPI
 import libs.utils
+import pytest
 import sys
 import os
 from dotenv import load_dotenv
